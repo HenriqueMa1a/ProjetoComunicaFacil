@@ -1,0 +1,23 @@
+-- inserts para efeitos de apresentação ao Sílvio
+INSERT INTO comunica.velocidade (id_veloc, velocidade) VALUES 
+(1, 5), 
+(2, 12),   
+(3, 20);
+
+INSERT INTO comunica.plano (nome, id_veloc) VALUES 
+('Básico', 1), 
+('Pro', 2),  
+('Premium', 3);
+
+INSERT INTO comunica.tipo_de_usuario (id_tipo, tipo) VALUES (1, 'comum'), (2, 'master');
+
+-- Inserir um novo usuário(master)
+INSERT INTO comunica.usuario(nome, nome_mat, data_nasc, cpf, endereco, login, senha, genero, id_tipo)
+VALUES ('admincomunicafacil', 'admin', '2000-05-16', '10408288760', 'adminaminadmin', 'aadmin', MD5('aaaaaaaa'), 'Não informado', 2);
+
+-- Obter o ID do usuário recém-inserido
+SET @id_usuario = LAST_INSERT_ID();
+
+-- Inserir um novo telefone associado ao usuário
+INSERT INTO comunica.telefone(numero, id_usuario, id_plano)
+VALUES ('(21) 97000-1851', @id_usuario, 3);

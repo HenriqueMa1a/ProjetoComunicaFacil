@@ -1,0 +1,48 @@
+-- Cria o esquema "comunica"
+CREATE SCHEMA comunica;
+
+-- Tabela "tipo_de_usuario"
+CREATE TABLE comunica.tipo_de_usuario (
+    id_tipo INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    tipo ENUM('master', 'comum') NOT NULL
+);
+
+-- Tabela "velocidade"
+CREATE TABLE comunica.velocidade (
+    id_veloc INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    velocidade INT
+);
+
+-- Tabela "plano"
+CREATE TABLE comunica.plano (
+    id_plano INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50),
+    id_veloc INT NOT NULL,
+    FOREIGN KEY (id_veloc) REFERENCES comunica.velocidade(id_veloc)
+);
+
+-- Tabela "usuario"
+CREATE TABLE comunica.usuario (
+    id_usuario INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    nome CHAR(80),
+    nome_mat CHAR(15),
+    data_nasc DATE,
+    cpf CHAR(11) UNIQUE,
+    endereco VARCHAR(255),
+    login VARCHAR(255),
+    senha VARCHAR(255),
+    genero VARCHAR(50) NOT NULL,
+    id_tipo INT DEFAULT 1, -- Valor padrão para "comum"
+    FOREIGN KEY (id_tipo) REFERENCES comunica.tipo_de_usuario(id_tipo)
+);
+
+
+-- Tabela "telefone"
+CREATE TABLE comunica.telefone (
+    id_tel INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    numero CHAR(15) UNIQUE,
+    id_usuario INT NOT NULL,
+    id_plano INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES comunica.usuario(id_usuario) ON DELETE CASCADE,
+    FOREIGN KEY (id_plano) REFERENCES comunica.plano(id_plano)
+);

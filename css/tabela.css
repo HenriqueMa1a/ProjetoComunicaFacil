@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* ESTILIZAÇÃO DA BARRA DE PESQUISA */
+.alinhar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.pesquisa {
+  width: 20%;
+  margin: 2rem 0;
+  margin-right: 7px;
+  display: flex;
+  justify-content: flex-end;
+  box-shadow: 0px 1px 6px rgba(32, 33, 36, 0.28);
+  border-radius: 20px;
+}
+
+.pesquisa input:focus{
+  outline: none;
+}
+
+input {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.bi-search {
+  margin: 0 5px;
+  color: black;
+}
+
+.lupa {
+  background-color: transparent;
+  color: white;
+  padding: 10px 6px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 500px) {
+  .pesquisa {
+    width: 65%;
+  }
+}
+/* ESTILIZAÇÃO DA BARRA DE PESQUISA */
+
+/* ESTILIZAÇÃO DA TABELA DE USUÁRIOS */
+.responstable {
+  margin: -1rem 0;
+  width: 100%;
+  overflow: hidden;
+  background: #FFF;
+  color: #024457;
+  border-radius: 10px;
+  border: 1px solid #167F92;
+  margin-bottom: 4rem;
+}
+.responstable tr {
+  border: 1px solid #D9E4E6;
+}
+.responstable tr:nth-child(odd) {
+  background-color: #EAF3F3;
+}
+.responstable th {
+  display: none;
+  border: 1px solid #FFF;
+  background-color: #167F92;
+  color: #FFF;
+  padding: 1rem;
+}
+.responstable th:first-child {
+  display: table-cell;
+  text-align: center;
+}
+.responstable th:nth-child(1) {
+  display: table-cell;
+}
+.responstable th:nth-child(2) span {
+  display: none;
+}
+.responstable th:nth-child(2):after {
+  content: attr(data-th);
+}
+@media (min-width: 480px) {
+  .responstable th:nth-child(2) span {
+    display: block;
+  }
+  .responstable th:nth-child(2):after {
+    display: none;
+  }
+
+}
+  .responstable td {
+    display: block;
+    word-wrap: break-word;
+  }
+
+  @media (min-width: 480px) {
+    .responstable td {
+      border: 1px solid #d9e4e6;
+    }
+  }
+  .responstable th,
+  .responstable td {
+    text-align: center;
+    margin: 1.5rem 1rem;
+  }
+  @media (min-width: 480px) {
+    .responstable th,
+    .responstable td {
+      display: table-cell;
+      padding: 1rem;
+    }
+}
+
+.bi-eye {
+  font-size: 23px;
+  color: black;
+  align-items: center;
+}
+
+.bi-eye:hover {
+  cursor: pointer;
+  color: #079c27;
+}
+
+.bi-pencil {
+  font-size: 21px;
+  color: black;
+  align-items: center;
+}
+
+.bi-pencil:hover {
+  cursor: pointer;
+  color: #043fee;
+}
+
+.bi-trash3 {
+    font-size: 22px;
+    color: black;
+    align-items: center;
+}
+
+.bi-trash3:hover {
+  cursor: pointer;
+  color: red;
+}
+
+/* ESTILIZAÇÃO DA TABELA DE USUÁRIOS */
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  right: 0; 
+  top: 0;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  width: 40%; 
+  opacity: 0; 
+  transition: opacity 0.2s; 
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 0;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; 
+  position: relative;
+  overflow-y: auto;
+}
+
+.close {
+  color: #aaa;
+  font-size: 35px;
+  font-weight: bold;
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+}
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; 
+}
+
+.input-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.1rem;
+  margin: 0.8rem;
+}
+
+.input-box input {
+  margin: 0.6rem 0;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 6px 2px #0000001c;
+  font-size: 0.8rem;
+  width: 90%;
+}
+
+.enviar {
+  display: flex;
+  justify-content: center;
+}
+
+.enviar button {
+  width: 40%;
+  margin-top: 0.5rem;
+  border: none;
+  background-color: #157bc9;
+  padding: 0.62rem;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.90rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.enviar button:hover {
+  background-color: #157bc9cf;
+}
+
+
+@media (max-width: 800px) {
+  .enviar button {
+    margin-top: -2rem;
+    width: 50%;
+  }
+}
