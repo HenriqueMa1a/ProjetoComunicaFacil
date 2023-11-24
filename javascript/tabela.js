@@ -75,3 +75,22 @@ function fecharModal() {
     document.documentElement.classList.remove("modal-open"); // Remove a classe do html
   }, 200);
 }
+
+// // FUNÇÃO PARA GERAR LOGS
+// function gerarLog(idUsuario, metodo2FA) {
+//   fetch("caminho/do/script/php/gerar-log.php", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/x-www-form-urlencoded",
+//     },
+//     body: `id_usuario=${idUsuario}&metodo_2fa=${metodo2FA}`,
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       // Lide com a resposta, se necessário
+//       console.log(data);
+//     })
+//     .catch((error) => {
+//       console.error("Erro ao gerar log:", error);
+//     });
+// }

@@ -25,7 +25,7 @@ switch (@$_REQUEST["acao"]) {
         $rowTel = $resTel->fetch_object();
         // fim da obtenção do telefone
         if ($qtd > 0) {
-
+            $_SESSION["id_usuario"] = $rowUser->id_usuario;
             $_SESSION["nome"] = $rowUser->nome;
             $_SESSION["nome_mat"] = $rowUser->nome_mat;
             $_SESSION["data_nasc"] = $rowUser->data_nasc;
@@ -41,35 +41,54 @@ switch (@$_REQUEST["acao"]) {
         break;
     case "2fa":
         $tipoPergunta = $_POST["tipo"];
-        //function para comportamento 2FA
-        function compara($nomeDoCampo)
+        // Função para comportamento 2FA
+        function compara($nomeDoCampo, $tipoPergunta, $conn, $mensagem)
         {
-            //capturar informações do 2FA
+            // Capturar informações do 2FA
             $resposta = $_POST["campo"];
 
             if ($resposta == $_SESSION[$nomeDoCampo]) {
-                print "<script>location.href='index.php';</script>";
-            } else {
-                print "<script>alert('Resposta incorreta');</script>";
-                print "<script>location.href='tela-2fa.php?tentativa_falha=1'</script>";
+                $sqlLog2FASuccess = "INSERT INTO logs (id_usuario, metodo_2fa, mensagem) VALUES (?, ?, ?)";
+                $stmtLog2FASuccess = $conn->prepare($sqlLog2FASuccess);
 
+                if ($stmtLog2FASuccess) {
+                    $mensagem = 'Login bem-sucedido com 2FA';
+                    $stmtLog2FASuccess->bind_param('sss', $_SESSION["id_usuario"], $tipoPergunta, $mensagem);
+                    $stmtLog2FASuccess->execute();
+                    $stmtLog2FASuccess->close();
+
+                    print "<script>location.href='index.php';</script>";
+                } else {
+                    $sqlLog2FAFail = "INSERT INTO logs (id_usuario, metodo_2fa, mensagem) VALUES (?, ?, ?)";
+                    $stmtLog2FAFail = $conn->prepare($sqlLog2FAFail);
+
+                    if ($stmtLog2FAFail) {
+                        $mensagemFail = "Login com o método {$tipoPergunta} malsucedido";
+                        $stmtLog2FAFail->bind_param('sss', $_SESSION["id_usuario"], $tipoPergunta, $mensagemFail);
+                        $stmtLog2FAFail->execute();
+                        $stmtLog2FAFail->close();
+
+                        print "<script>alert('Resposta incorreta');</script>";
+                        print "<script>location.href='tela-2fa.php?tentativa_falha=1'</script>";
+                    }
+                }
             }
         }
-
-        //verificação
+        // Verificação
         switch ($tipoPergunta) {
             case "text":
-                compara("nome_mat");
+                compara("nome_mat", $tipoPergunta, $conn, 'Login bem-sucedido');
                 break;
 
             case "tel":
-                compara("numero");
+                compara("numero", $tipoPergunta, $conn, 'Login bem-sucedido');
                 break;
             case "date":
-                compara("data_nasc");
+                compara("data_nasc", $tipoPergunta, $conn, 'Login bem-sucedido');
                 break;
         }
         break;
+
 
     case "recuperaSenha":
         $cpfDigitado = $_POST["CPF"];
