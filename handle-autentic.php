@@ -34,15 +34,18 @@ switch (@$_REQUEST["acao"]) {
 
 
             print "<script>location.href='tela-2fa.php'</script>";
+            exit();
         } else {
             print "<script>alert('Login e/ou Senha incorreto(s)');</script>";
             print "<script>location.href='tela-login.php'</script>";
+            exit();
         }
         break;
+        
     case "2fa":
         $tipoPergunta = $_POST["tipo"];
         // Função para comportamento 2FA
-        function compara($nomeDoCampo, $tipoPergunta, $conn, $mensagem)
+        function compara($nomeDoCampo, $tipoPergunta, $conn)
         {
             // Capturar informações do 2FA
             $resposta = $_POST["campo"];
@@ -52,24 +55,26 @@ switch (@$_REQUEST["acao"]) {
                 $stmtLog2FASuccess = $conn->prepare($sqlLog2FASuccess);
 
                 if ($stmtLog2FASuccess) {
-                    $mensagem = 'Login bem-sucedido com 2FA';
-                    $stmtLog2FASuccess->bind_param('sss', $_SESSION["id_usuario"], $tipoPergunta, $mensagem);
+                    $mensagemSuccess = 'Login bem-sucedido com 2FA';
+                    $stmtLog2FASuccess->bind_param('iss', $_SESSION["id_usuario"], $tipoPergunta, $mensagemSuccess);
                     $stmtLog2FASuccess->execute();
                     $stmtLog2FASuccess->close();
 
                     print "<script>location.href='index.php';</script>";
+                    exit();
                 } else {
                     $sqlLog2FAFail = "INSERT INTO logs (id_usuario, metodo_2fa, mensagem) VALUES (?, ?, ?)";
                     $stmtLog2FAFail = $conn->prepare($sqlLog2FAFail);
 
                     if ($stmtLog2FAFail) {
                         $mensagemFail = "Login com o método {$tipoPergunta} malsucedido";
-                        $stmtLog2FAFail->bind_param('sss', $_SESSION["id_usuario"], $tipoPergunta, $mensagemFail);
+                        $stmtLog2FAFail->bind_param('iss', $_SESSION["id_usuario"], $tipoPergunta, $mensagemFail);
                         $stmtLog2FAFail->execute();
                         $stmtLog2FAFail->close();
 
                         print "<script>alert('Resposta incorreta');</script>";
                         print "<script>location.href='tela-2fa.php?tentativa_falha=1'</script>";
+                        exit();
                     }
                 }
             }
@@ -77,14 +82,14 @@ switch (@$_REQUEST["acao"]) {
         // Verificação
         switch ($tipoPergunta) {
             case "text":
-                compara("nome_mat", $tipoPergunta, $conn, 'Login bem-sucedido');
+                compara("nome_mat", $tipoPergunta, $conn);
                 break;
 
             case "tel":
-                compara("numero", $tipoPergunta, $conn, 'Login bem-sucedido');
+                compara("numero", $tipoPergunta, $conn);
                 break;
             case "date":
-                compara("data_nasc", $tipoPergunta, $conn, 'Login bem-sucedido');
+                compara("data_nasc", $tipoPergunta, $conn);
                 break;
         }
         break;
@@ -118,6 +123,7 @@ switch (@$_REQUEST["acao"]) {
         } else {
             print "<script>alert('Usuário não encontrado no banco de dados. Tente novamente');</script>";
             print "<script>location.href='recuperar-senha.php';</script>";
+            exit();
         }
 
         break;
