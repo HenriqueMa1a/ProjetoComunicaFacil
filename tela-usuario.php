@@ -35,7 +35,7 @@
         $sqlUser = "SELECT * FROM usuario";
         $resUser = $conn->query($sqlUser);
         // trazendo o número de telefone com o respectivo id do usuário
-        $sqlTel = "SELECT * FROM usuario";
+        $sqlTel = "SELECT * FROM telefone";
         $resTel = $conn->query($sqlTel);
 
         if ($resUser) {
@@ -52,7 +52,7 @@
                 echo "<td>" . $cpf_formatado . "</td>";
                 echo "<td>" . $rowUser->login . "</td>";
                 echo "<td>" . $dataFormatada . "</td>";
-                echo "<td> <i class='bi bi-eye' id='openModalButton'  onclick=\"modal('" . $rowUser->nome_mat . "', '" . $numeroDoUsuario->numero . "', '" . $rowUser->genero . "', '" . $rowUser->senha . "', '" . $rowUser->endereco . "')\"></i> |
+                echo "<td> <i class='bi bi-eye' id='openModalButton'  onclick=\"modal('" . $rowUser->nome_mat . "', '" . $numeroDoUsuario->numero . "', '" . $rowUser->genero . "', '" . $rowUser->senha . "', '" . $rowUser->endereco . "', '" . $rowUser->id_usuario . "')\"></i> |
                 <i class='bi bi-pencil' onclick=\"if (confirm('Tem certeza que deseja editar?')) { location.href='editar-usuario.php?id=" . $rowUser->id_usuario . "'; }\"></i> |
                 <i class='bi-trash3' onclick=\"if (confirm('Tem certeza que deseja excluir?')) { location.href='handle-usuario.php?acao=excluir&id=" . $rowUser->id_usuario . "'; }\"></i></td>";
                 echo "</tr>";
@@ -74,29 +74,29 @@
         <div class="input-group">
             <div class="input-box">
                 <label for="nome1">Nome Materno</label>
-                <input id="nome1" type="text" name="nome1" placeholder="aaaaaaaaaaaaaaaaa" disabled>
+                <input id="nome1" type="text" name="nome1" disabled>
             </div>
 
 
             <div class="input-box">
                 <label for="tel">Celular</label>
-                <input id="number" type="tel" name="tel" placeholder="(21) 99885-6446" disabled>
+                <input id="number" type="tel" name="tel" disabled>
             </div>
 
 
             <div class="input-box">
                 <label for="gender">Gênero</label>
-                <input id="gender" type="text" name="gender" placeholder="Masculino" disabled>
+                <input id="gender" type="text" name="gender" disabled>
             </div>
 
             <div class="input-box">
                 <label for="senha">Senha</label>
-                <input id="password" type="text" name="senha" placeholder="********" disabled>
+                <input id="password" type="text" name="senha" disabled>
             </div>
 
             <div class="input-box">
                 <label for="rua">Endereço</label>
-                <input id="rua" type="text" name="rua" placeholder="Estrada General Afonso de Carvalho" disabled>
+                <input id="rua" type="text" name="rua" disabled>
             </div>
 
 
@@ -105,13 +105,78 @@
 
         <br><br><br><br>
         <div class="enviar">
-            <button>Gerar Log</button>
+            <button id="log">Gerar Logs</button>
         </div>
 
 
     </div>
 </div>
-
 <div class="overlay" id="overlay" onclick="fecharModal()"></div>
 
+
+<div id="modalLogs">
+    <div class="modal-content">
+        <!-- Conteúdo do seu segundo modal -->
+        <span class="close" id="closeModalLogs" onclick="fecharModalLogs()">&times;</span>
+        <h2>Log de Informações</h2>
+        <!-- Inserção da tabela para exibir logs -->
+        <table id="tabelaLogs">
+            <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Tipo de Log</th>
+                    <th>Mensagem</th>
+                </tr>
+            </thead>
+            <tbody id="corpoTabelaLogs"></tbody>
+        </table>
+    </div>
+</div>
+<div id="overlayLogs" onclick="fecharModalLogs()"></div>
+
 <script src="./javascript/tabela.js"></script>
+<script>
+    function carregarLogsUsuario(idUsuario) {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+
+                var logs = JSON.parse(xhr.responseText);
+
+                document.getElementById("corpoTabelaLogs").innerHTML = "";
+
+                logs.forEach(function (log) {
+                    var row = document.getElementById("corpoTabelaLogs").insertRow(-1);
+                    var cellDataHora = row.insertCell(0);
+                    var cellTipoDeLog = row.insertCell(1);
+                    var cellMensagem = row.insertCell(2);
+
+
+                    cellDataHora.innerHTML = log.data_hora;
+                    cellTipoDeLog.innerHTML = log.tipoDeLog;
+                    cellMensagem.innerHTML = log.mensagem;
+
+                });
+            }
+        };
+
+        xhr.open("GET", "get_logs_usuario.php?id_usuario=" + idUsuario, true);
+        xhr.send();
+    }
+    // FUNÇÃO PARA FECHAR O MODAL DE LOGS
+    function fecharModalLogs() {
+        var modalLogs = document.getElementById("modalLogs");
+        var overlayLogs = document.getElementById("overlayLogs");
+
+        modalLogs.style.display = "none";
+        overlayLogs.style.display = "none";
+
+        document.body.classList.remove("modal-open");
+        document.documentElement.classList.remove("modal-open");
+    }
+
+    // Adiciona o evento de clique ao botão de fechar e ao overlay
+    document.getElementById("closeModalLogs").addEventListener("click", fecharModalLogs);
+    document.getElementById("overlayLogs").addEventListener("click", fecharModalLogs);
+
+</script>

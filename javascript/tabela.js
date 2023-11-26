@@ -33,12 +33,14 @@ function modal(...linha) {
 
   // preencher o input com os dados vindo do banco
   let containerModal = document.getElementById("modal");
-  containerModal.querySelector("#nome1").value = linha[0];
-  containerModal.querySelector("#number").value = linha[1];
-  containerModal.querySelector("#gender").value = linha[2];
-  containerModal.querySelector("#password").value = linha[3];
-  containerModal.querySelector("#rua").value = linha[4];
-
+  containerModal.querySelector("#nome1").placeholder = linha[0];
+  containerModal.querySelector("#number").placeholder = linha[1];
+  containerModal.querySelector("#gender").placeholder = linha[2];
+  containerModal.querySelector("#password").placeholder = linha[3];
+  containerModal.querySelector("#rua").placeholder = linha[4];
+  containerModal.querySelector("#log").onclick = function () {
+    gerarLog(linha[5]);
+  };
   setTimeout(function () {
     modal.style.opacity = "1";
     overlay.style.display = "block";
@@ -76,21 +78,13 @@ function fecharModal() {
   }, 200);
 }
 
-// // FUNÇÃO PARA GERAR LOGS
-// function gerarLog(idUsuario, metodo2FA) {
-//   fetch("caminho/do/script/php/gerar-log.php", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/x-www-form-urlencoded",
-//     },
-//     body: `id_usuario=${idUsuario}&metodo_2fa=${metodo2FA}`,
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       // Lide com a resposta, se necessário
-//       console.log(data);
-//     })
-//     .catch((error) => {
-//       console.error("Erro ao gerar log:", error);
-//     });
-// }
+function gerarLog(idUsuario) {
+  // ... (Sua lógica existente para gerar logs)
+
+  // Mostra o segundo modal e seu overlay
+  document.getElementById("modalLogs").style.display = "block";
+  document.getElementById("overlayLogs").style.display = "block";
+
+  // Carrega os logs do usuário no modal
+  carregarLogsUsuario(idUsuario);
+}

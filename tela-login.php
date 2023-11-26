@@ -33,6 +33,23 @@
             <label for="senha">Senha</label>
             <input id="senha" type="password" name="senha" placeholder="Digite sua senha" maxlength="8" />
           </div>
+
+
+          <div class="tipo-usuario">
+            <label for="tipo_usuario">Tipo de usuário</label>
+            <div class="tipo-input">
+              <input id="master" type="radio" name="userType" value="master">
+              <label for="master">Master</label>
+            </div>
+
+            <div class="tipo-input">
+              <input id="comum" type="radio" name="userType" value="comum">
+              <label for="comum">Comum</label>
+            </div>
+
+          </div>
+
+
         </div>
 
         <div class="center">

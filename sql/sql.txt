@@ -53,7 +53,7 @@ CREATE TABLE comunica.logs (
     id_log INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     id_usuario INT,
     data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    metodo_2fa VARCHAR(50),
+    tipoDeLog VARCHAR(50),
     mensagem TEXT,
     FOREIGN KEY (id_usuario) REFERENCES comunica.usuario(id_usuario)
 );

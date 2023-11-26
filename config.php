@@ -11,4 +11,5 @@ $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
 // } else {
 //     echo 'Conexão bem sucedida <br>';
 // }
+
 ?>

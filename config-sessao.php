@@ -1,6 +1,9 @@
 <?php
-// Configura o tempo de expiração da sessão em segundos (por exemplo, 30 minutos)
-$tempo_expiracao = 1800; // 30 minutos
+$tempo_expiracao = 300;
+
+//server
+ini_set('session.gc_maxlifetime', $tempo_expiracao);
+ini_set('session.cookie_lifetime', $tempo_expiracao);
 
 // Configura o cache no lado do cliente
 header("Cache-Control: no-cache, must-revalidate");

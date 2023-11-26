@@ -1,5 +1,6 @@
 <?php
 include("config-sessao.php");
+
 //função para exibição do login/btnEntrar
 function exibirConteudoLogin()
 {
@@ -66,6 +67,7 @@ function exibirConteudoPages()
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tabela.css">
     <link rel="icon" href="imagens/logo.png">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 
 <body>
@@ -97,7 +99,7 @@ function exibirConteudoPages()
                 <?php exibirConteudoLogin2(); ?>
             </ul>
 
-            
+
         </div>
     </header>
 
@@ -178,6 +180,40 @@ function exibirConteudoPages()
             document.getElementById('logoutForm').submit();
         }
     </script>
+    <?php
+    // Verifica se o usuário está logado antes de incluir o script JavaScript
+    if (isset($_SESSION["nome"]) && !empty($_SESSION["nome"])) {
+        ?>
+        <script>
+
+            var inatividadeTimeout;
+
+            function realizarLogout() {
+                alert("Você ficou mais do que 5 minutos em inatividade e será deslogado")
+                document.getElementById('logoutForm').submit();
+            }
+
+            function configurarTemporizadorInatividade() {
+                inatividadeTimeout = setTimeout(realizarLogout, <?php echo $tempo_expiracao * 1000; ?>);
+            }
+
+            // Reinicia o temporizador quando há atividade na página
+            function reiniciarTemporizadorInatividade() {
+                clearTimeout(inatividadeTimeout);
+                configurarTemporizadorInatividade();
+            }
+
+            // Configura eventos para reiniciar o temporizador em diferentes interações do usuário
+            document.addEventListener('mousemove', reiniciarTemporizadorInatividade);
+            document.addEventListener('keypress', reiniciarTemporizadorInatividade);
+            document.addEventListener('scroll', reiniciarTemporizadorInatividade);
+            document.addEventListener('click', reiniciarTemporizadorInatividade);
+
+            configurarTemporizadorInatividade();
+        </script>
+        <?php
+    }
+    ?>
 </body>
 
 </html>

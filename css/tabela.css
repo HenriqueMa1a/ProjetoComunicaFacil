@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600&display=swap");
 
 * {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
 /* ESTILIZAÇÃO DA BARRA DE PESQUISA */
@@ -22,7 +22,7 @@
   border-radius: 20px;
 }
 
-.pesquisa input:focus{
+.pesquisa input:focus {
   outline: none;
 }
 
@@ -60,23 +60,23 @@ input {
   margin: -1rem 0;
   width: 100%;
   overflow: hidden;
-  background: #FFF;
+  background: #fff;
   color: #024457;
   border-radius: 10px;
-  border: 1px solid #167F92;
+  border: 1px solid #167f92;
   margin-bottom: 4rem;
 }
 .responstable tr {
-  border: 1px solid #D9E4E6;
+  border: 1px solid #d9e4e6;
 }
 .responstable tr:nth-child(odd) {
-  background-color: #EAF3F3;
+  background-color: #eaf3f3;
 }
 .responstable th {
   display: none;
-  border: 1px solid #FFF;
-  background-color: #167F92;
-  color: #FFF;
+  border: 1px solid #fff;
+  background-color: #167f92;
+  color: #fff;
   padding: 1rem;
 }
 .responstable th:first-child {
@@ -99,29 +99,28 @@ input {
   .responstable th:nth-child(2):after {
     display: none;
   }
-
 }
-  .responstable td {
-    display: block;
-    word-wrap: break-word;
-  }
+.responstable td {
+  display: block;
+  word-wrap: break-word;
+}
 
-  @media (min-width: 480px) {
-    .responstable td {
-      border: 1px solid #d9e4e6;
-    }
+@media (min-width: 480px) {
+  .responstable td {
+    border: 1px solid #d9e4e6;
   }
+}
+.responstable th,
+.responstable td {
+  text-align: center;
+  margin: 1.5rem 1rem;
+}
+@media (min-width: 480px) {
   .responstable th,
   .responstable td {
-    text-align: center;
-    margin: 1.5rem 1rem;
+    display: table-cell;
+    padding: 1rem;
   }
-  @media (min-width: 480px) {
-    .responstable th,
-    .responstable td {
-      display: table-cell;
-      padding: 1rem;
-    }
 }
 
 .bi-eye {
@@ -147,9 +146,9 @@ input {
 }
 
 .bi-trash3 {
-    font-size: 22px;
-    color: black;
-    align-items: center;
+  font-size: 22px;
+  color: black;
+  align-items: center;
 }
 
 .bi-trash3:hover {
@@ -167,14 +166,14 @@ body.modal-open {
   display: none;
   position: fixed;
   z-index: 999;
-  right: 0; 
+  right: 0;
   top: 0;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.5);
-  width: 40%; 
-  opacity: 0; 
-  transition: opacity 0.2s; 
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 40%;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
 .modal-content {
@@ -184,7 +183,7 @@ body.modal-open {
   border: 1px solid #888;
   width: 100%;
   height: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   position: relative;
   overflow-y: auto;
 }
@@ -205,7 +204,6 @@ body.modal-open {
   text-decoration: none;
 }
 
-
 .overlay {
   position: fixed;
   top: 0;
@@ -213,7 +211,7 @@ body.modal-open {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: none; 
+  display: none;
 }
 
 .input-group {
@@ -254,7 +252,7 @@ body.modal-open {
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 0.90rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: #fff;
 }
@@ -263,10 +261,103 @@ body.modal-open {
   background-color: #157bc9cf;
 }
 
-
 @media (max-width: 800px) {
   .enviar button {
     margin-top: -2rem;
     width: 50%;
   }
+}
+
+#modalLogs {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 60%;
+  height: 60%;
+  overflow-y: auto;
+  background-color: #fefefe;
+  border: 1px solid #888;
+  box-sizing: border-box;
+}
+
+#overlayLogs {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
+
+/* ESTILIZAÇÃO DA TABELA DE LOGS */
+#modalLogs table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#modalLogs th,
+#modalLogs td {
+  border: 1px solid #d9e4e6;
+  padding: 10px;
+  text-align: center;
+}
+
+#modalLogs th {
+  background-color: #167f92;
+  color: #fff;
+  display: table-cell;
+}
+
+#modalLogs tbody tr:nth-child(odd) {
+  background-color: #eaf3f3;
+}
+
+#modalLogs tbody tr:hover {
+  background-color: #d3e0e3;
+}
+
+#modalLogs td {
+  display: table-cell;
+  word-wrap: break-word;
+}
+
+#modalLogs th,
+#modalLogs td {
+  text-align: center;
+  margin: 1.5rem 1rem;
+}
+
+/* Ajustes para responsividade */
+@media (max-width: 480px) {
+  #modalLogs th,
+  #modalLogs td {
+    display: block;
+    padding: 1rem;
+  }
+
+  #modalLogs th:first-child {
+    display: table-cell;
+  }
+}
+
+/* Ajustes para ícones de ação na tabela de logs */
+#modalLogs .bi-eye,
+#modalLogs .bi-pencil,
+#modalLogs .bi-trash3 {
+  font-size: 20px;
+  margin: 0 5px;
+  color: black;
+}
+
+#modalLogs .bi-eye:hover,
+#modalLogs .bi-pencil:hover,
+#modalLogs .bi-trash3:hover {
+  cursor: pointer;
+  color: #079c27;
 }
