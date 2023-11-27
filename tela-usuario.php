@@ -1,10 +1,3 @@
-<?php
-//include("config-sessao.php");
-//if (empty($_SESSION) || $_SESSION['tipo_usuario'] !== 'master') {
-// header("Location: tela-usuario-comum.php");
-//    exit();
-//}
-?>
 <!-- input de pesquisa -->
 <div class="alinhar">
     <div class="pesquisa">

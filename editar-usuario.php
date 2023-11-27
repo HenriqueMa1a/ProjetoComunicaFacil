@@ -161,10 +161,6 @@
                     <span id="aviso1" class="aviso1"></span>
                     <input type="submit" name="cadastrar" value="Editar">
                 </div>
-
-                <!-- <div class="limpar">
-                    <input type="reset" name="limpar" value="Limpar"> Tem necessidade?
-                </div> -->
             </form>
         </div>
     </div>

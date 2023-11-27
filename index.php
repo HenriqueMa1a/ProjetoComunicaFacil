@@ -104,8 +104,6 @@ function exibirConteudoPages()
     </header>
 
     <?php
-    //incluindo a conexão com o banco
-    
     // verificação das requições do menu
     switch (@$_REQUEST['page']) {
         case 'modelo':

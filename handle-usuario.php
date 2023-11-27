@@ -17,13 +17,32 @@ switch (@$_REQUEST["acao"]) {
         $plano = isset($_POST["plano"]) ? $_POST["plano"] : "";
         $gender = isset($_POST["gender"]) ? $_POST["gender"] : "";
         //Fim da obtenção dos dados
+        // Verificar se o CPF já está cadastrado
+        $consultaCPF = "SELECT id_usuario FROM usuario WHERE cpf = '{$cpf}'";
+        $resCPF = $conn->query($consultaCPF);
+
+        if ($resCPF && $resCPF->num_rows > 0) {
+            print "<script>alert('Usuário com este CPF já está cadastrado')</script>";
+            print "<script>location.href='cadastro.php'</script>";
+            break;
+        }
+
+        // Verificar se o número de telefone já está cadastrado
+        $consultaTelefone = "SELECT id_usuario FROM telefone WHERE numero = '{$tel}'";
+        $resTelefone = $conn->query($consultaTelefone);
+
+        if ($resTelefone && $resTelefone->num_rows > 0) {
+            print "<script>alert('Número de telefone já está cadastrado')</script>";
+            print "<script>location.href='cadastro.php'</script>";
+            break;
+        }
+
         // início da inserção
         $sql = "INSERT INTO usuario(nome, nome_mat, data_nasc, cpf, endereco, login, senha, genero, id_tipo) VALUES ('{$nome}','{$nome_mat}', '{$data_nasc}', '{$cpf}', '{$endereco}', '{$login}', '{$senha}', '{$gender}',1)";
         $res = $conn->query($sql);
 
         if ($res) {
             $idUsuario = $conn->insert_id;
-            // Inserção do telefone associado ao usuário
             // Inserção do id_plano associado ao usuário com base no nome do plano escolhido
             $planoEscolhido = $_POST["plano"];
             $consultaPlano = "SELECT id_plano FROM comunica.plano WHERE nome = '{$planoEscolhido}'";
@@ -36,7 +55,7 @@ switch (@$_REQUEST["acao"]) {
                 print "<script>alert('O plano não foi escolhido')</script>";
             }
             // fim - plano
-
+            // Inserção do telefone associado ao usuário
             $sqlTelefone = "INSERT INTO telefone(numero, id_usuario, id_plano) VALUES ('{$tel}', {$idUsuario}, {$idPlano})";
             $resTelefone = $conn->query($sqlTelefone);
 
@@ -101,7 +120,6 @@ switch (@$_REQUEST["acao"]) {
 
         // início da edição
 
-        //obs: Não está completo
         $sql = "UPDATE usuario SET
                     nome='{$nome}',
                     nome_mat='{$nome_mat}',
