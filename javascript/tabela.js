@@ -79,8 +79,6 @@ function fecharModal() {
 }
 
 function gerarLog(idUsuario) {
-  // ... (Sua lógica existente para gerar logs)
-
   // Mostra o segundo modal e seu overlay
   document.getElementById("modalLogs").style.display = "block";
   document.getElementById("overlayLogs").style.display = "block";

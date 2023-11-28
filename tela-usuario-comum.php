@@ -8,16 +8,13 @@
   <title>Projeto Back-end</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" href="imagens/logo.png">
+
 </head>
 
 <body>
 
   <div class="form-image">
-    <br>
-    <br>
     <img src="imagens/imagem_usuario-comum.svg" alt="Erro" />
-    <br>
-    <br>
     <h2 class="texto-info">Você não possui um plano, entre em contato com um dos nossos atendentes</h2>
   </div>
 

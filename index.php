@@ -67,7 +67,9 @@ function exibirConteudoPages()
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tabela.css">
     <link rel="icon" href="imagens/logo.png">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
 </head>
 
 <body>

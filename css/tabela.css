@@ -361,3 +361,36 @@ body.modal-open {
   cursor: pointer;
   color: #079c27;
 }
+
+/* Lidando com o modal de logs */
+
+#modalLogs h2 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+#modalLogs button#gerarPDF {
+  width: 150px; /* Ajuste a largura conforme necessário */
+  margin-top: 20px;
+  margin-right: 20px;
+  background-color: #157bc9;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  border: none;
+}
+
+#modalLogs button#gerarPDF:hover {
+  background-color: #157bc9cf;
+}
+
+/* Ajustes para responsividade */
+@media (max-width: 480px) {
+  #modalLogs button#gerarPDF {
+    width: 100%; /* Faça o botão ocupar 100% da largura em telas menores */
+    margin-right: 0;
+  }
+}

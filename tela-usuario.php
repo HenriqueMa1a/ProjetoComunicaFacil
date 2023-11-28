@@ -112,6 +112,7 @@
         <!-- Conteúdo do seu segundo modal -->
         <span class="close" id="closeModalLogs" onclick="fecharModalLogs()">&times;</span>
         <h2>Log de Informações</h2>
+        <button id="gerarPDF">Gerar PDF</button>
         <!-- Inserção da tabela para exibir logs -->
         <table id="tabelaLogs">
             <thead>
@@ -129,11 +130,61 @@
 
 <script src="./javascript/tabela.js"></script>
 <script>
+    function gerarPDF(logs) {
+        // Crie um array para armazenar o conteúdo do PDF
+        var content = [];
+
+        content.push({ text: 'Logs do Usuário', style: 'header' });
+        content.push([{ text: '', margin: [0, 10] }]);
+
+        logs.forEach(function (log) {
+            // Adicione as linhas do log ao array de conteúdo
+            content.push([
+                { text: 'Data/Hora: ' + log.data_hora, style: 'logItem' },
+                { text: 'Tipo de Log: ' + log.tipoDeLog, style: 'logItem' },
+                { text: 'Mensagem: ' + log.mensagem, style: 'logItem' }
+            ]);
+
+            // Adicione um espaço entre os logs
+            content.push([{ text: '', margin: [0, 10] }]);
+        });
+
+        // Defina as opções do PDF
+        var docDefinition = {
+            content: content,
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    margin: [0, 0, 0, 10],
+                    alignment: 'center',
+                    color: '#157bc9'
+                },
+                logItem: {
+                    fontSize: 12,
+                    margin: [0, 0, 0, 5],
+                    color: '#333'
+                }
+            }
+        };
+
+
+        pdfMake.createPdf(docDefinition).download('logs.pdf');
+    }
+
+
+
+    // Adicione um evento de clique para o botão "Gerar PDF" dentro do modal de logs
+    document.getElementById("gerarPDF").addEventListener("click", function () {
+        var logs = JSON.parse(document.getElementById("corpoTabelaLogs").getAttribute("data-logs"));
+        gerarPDF(logs);
+    });
+
+    // Modifique a função carregarLogsUsuario para incluir os logs diretamente no atributo data-logs
     function carregarLogsUsuario(idUsuario) {
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
-
                 var logs = JSON.parse(xhr.responseText);
 
                 document.getElementById("corpoTabelaLogs").innerHTML = "";
@@ -144,18 +195,20 @@
                     var cellTipoDeLog = row.insertCell(1);
                     var cellMensagem = row.insertCell(2);
 
-
                     cellDataHora.innerHTML = log.data_hora;
                     cellTipoDeLog.innerHTML = log.tipoDeLog;
                     cellMensagem.innerHTML = log.mensagem;
-
                 });
+
+                // Adicione os logs ao atributo data-logs
+                document.getElementById("corpoTabelaLogs").setAttribute("data-logs", JSON.stringify(logs));
             }
         };
 
         xhr.open("GET", "get_logs_usuario.php?id_usuario=" + idUsuario, true);
         xhr.send();
     }
+
     // FUNÇÃO PARA FECHAR O MODAL DE LOGS
     function fecharModalLogs() {
         var modalLogs = document.getElementById("modalLogs");

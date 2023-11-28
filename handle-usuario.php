@@ -84,7 +84,11 @@ switch (@$_REQUEST["acao"]) {
             $sqlExcluirTelefone = "DELETE FROM telefone WHERE id_usuario = $idUsuario";
             $resExcluirTelefone = $conn->query($sqlExcluirTelefone);
 
-            if ($resExcluirTelefone) {
+            $sqlExcluirLogs = "DELETE FROM logs WHERE id_usuario = $idUsuario";
+            $resExcluirlogs = $conn->query($sqlExcluirLogs);
+
+
+            if ($resExcluirTelefone && $resExcluirlogs) {
                 // Agora, é seguro excluir o usuário
                 $sqlExcluirUsuario = "DELETE FROM usuario WHERE id_usuario = $idUsuario";
                 $resExcluirUsuario = $conn->query($sqlExcluirUsuario);
